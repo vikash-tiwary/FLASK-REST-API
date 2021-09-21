@@ -3,9 +3,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import jwt
 import datetime
-from .models import app
-from .models import User
-
+from api.models import app,db,Address,Author,Post
+from api.schemas import PostSchema,post_schema,posts_schema
+from api.models import User
+import uuid
 
 user_blueprint = Blueprint('user', __name__,url_prefix='/user')
 post_blueprint = Blueprint('post', __name__,url_prefix='/post')
@@ -78,7 +79,7 @@ def create_user(current_user):
     if not current_user.admin:
         return jsonify({'message':'Cannot perform that function'})
 
-    data=request.get_json()
+    data=request.get_json(force=True)
     hashed_password = generate_password_hash(data["password"],method="sha256")
 
     new_user=User(public_id=str(uuid.uuid4()),name=data["name"],password=hashed_password,admin=False)
@@ -89,7 +90,7 @@ def create_user(current_user):
 
 @user_blueprint.route('/user/<public_id>',methods=['PUT'])
 @token_required
-def promote_user(public_id):
+def promote_user(current_user,public_id):
     if not current_user.admin:
         return jsonify({'message':'Cannot perform that function'})
 
@@ -105,7 +106,7 @@ def promote_user(public_id):
 
 @user_blueprint.route('/user/<public_id>',methods=['DELETE'])
 @token_required
-def delete_users(public_id ):
+def delete_users(current_user,public_id ):
     if not current_user.admin:
         return jsonify({'message':'Cannot perform that function'})
 
@@ -147,11 +148,21 @@ def add_post(current_user):
     if not current_user.admin:
         return jsonify({'message':'Cannot perform that function'})
 
+    # data=request.get_json()
+    # print('hahah')
+    # print(data)
+
+    details=request.json['details']
+    add=Address(details=details)
+
+    name=request.json['name']
+    auth=Author(name=name,address=add)
+
     title=request.json['title']
     description=request.json['description']
-    author=request.json['author']
 
-    my_posts=Post(title,description,author)
+    my_posts=Post(title=title,description=description,author=auth)
+
     db.session.add(my_posts)
     db.session.commit()
 

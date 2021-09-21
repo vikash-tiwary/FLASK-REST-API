@@ -1,5 +1,5 @@
 from flask_marshmallow import Marshmallow
-from app import app
+from api.models import app
 ma = Marshmallow(app)
 
 class PostSchema(ma.Schema):

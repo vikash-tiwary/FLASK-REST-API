@@ -42,8 +42,8 @@ class Author(db.Model):
 class Address(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
-    description = db.Column(db.String(500))
+    details = db.Column(db.String(500))
     def __init__(self,author_id,name):
         self.author_id=author_id
-        self.description=description
+        self.details=details
     
