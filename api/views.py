@@ -436,6 +436,24 @@ def get_address_id(current_user,id):
     address= Address.query.get(id)
     return address_schema.jsonify(address)
 
+@post_blueprint.route('/address_update/<id>/',methods=['PUT'])
+@token_required
+def address_update(current_user,id):
+    """
+    This function is use to update address details according to id
+    """
+    if not current_user.admin:
+        return jsonify({'message':'Cannot perform that function'})
+    author=Author.query.get(id)
+    data=request.get_json(force=True)
+
+    details=data['details']
+    
+    author.details=details
+
+    db.session.commit()
+    return address_schema.jsonify(author)
+
 
 
 
