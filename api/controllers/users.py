@@ -12,7 +12,7 @@ from api.controllers.login import token_required
 user_blueprint = Blueprint('user', __name__,url_prefix='/user')
 
 
-@user_blueprint.route('/user',methods=['GET'])
+@user_blueprint.route('/get',methods=['GET'])
 @token_required
 def get_all_users(current_user):
     """
@@ -35,7 +35,7 @@ def get_all_users(current_user):
     return jsonify({'users':output})
 
 
-@user_blueprint.route('/user/<public_id>',methods=['GET'])
+@user_blueprint.route('/get/<public_id>',methods=['GET'])
 @token_required
 def get_one_user(current_user,public_id):
     """
@@ -58,7 +58,7 @@ def get_one_user(current_user,public_id):
     return jsonify({'users':user_data})
 
 
-@user_blueprint.route('/user',methods=['POST'])
+@user_blueprint.route('/post',methods=['POST'])
 @token_required
 def create_user(current_user):
     """
@@ -77,7 +77,7 @@ def create_user(current_user):
     return jsonify({'message':'New User Created!'})
 
 
-@user_blueprint.route('/user/<public_id>',methods=['PUT'])
+@user_blueprint.route('/update/<public_id>',methods=['PUT'])
 @token_required
 def promote_user(current_user,public_id):
     """
@@ -97,7 +97,7 @@ def promote_user(current_user,public_id):
     return jsonify({'message':'The User has been promoted!'})
 
 
-@user_blueprint.route('/user/<public_id>',methods=['DELETE'])
+@user_blueprint.route('/delete/<public_id>',methods=['DELETE'])
 @token_required
 def delete_users(current_user,public_id ):
     """
