@@ -1,6 +1,6 @@
 # FLASK-REST-API
 
-# Requirements
+## Requirements
 --------------
 Create a REST API in python flask with GET, POST, PUT, DELETE methods
 1. Use mysql as database along with SQLalchemy
@@ -9,40 +9,51 @@ Create a REST API in python flask with GET, POST, PUT, DELETE methods
 4. The API endpoints should not be accessible, can be accessed only with security token
 5. Create unit/functional test cases
 
-# Data Base Creation
+
+### Set up emvironment
+The installation is very streight forward 
+and make sure that you are using python 3.8
+
+```bash
+$ cd FLASK-REST-API
+$ virtualenv env
+(env)FLASK-REST-API$ source env/bin/actiavte
+```
+(env) $ pip install -r requirements.txt
+
+### Running
+
+When all dependencies has been installed, You can run the flask application 
+on local isnatance by running 
+
+```bash
+(env)FLASK-REST-API$ export FLASK_APP=app.py
+(env)FLASK-REST-API$ flask run
+
+```
+
+### Data Base Creation
 I have created post database in mysql-db
+
+```bash
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/post'
 
 ~/project/FLASK-REST-API$ python
 >>> from api.models import db
 >>>db.create_all()
 
-In this Project I have taken 4 table
-All three post,author and address table is connected with foreign key
-1. User Model
+```
 
-class User(db.Model):
-    id=db.Column(db.Integer, primary_key=True)
-    public_id=db.Column(db.String(50),unique=True)
-    name=db.Column(db.String(200))
-    password=db.Column(db.String(500))
-    admin=db.Column(db.Boolean)
+### Testing
+when the database and application is created 
+Then test file 
 
-2. Post
-class Post(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    title = db.Column(db.String(100))
-    description = db.Column(db.String(200))
-
-3. Author
-class Author(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    name = db.Column(db.String(100))
-
-4. Addresss
-
-class Address(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
-    details = db.Column(db.String(500))
+```bash
+(env)FLASK-REST-API$ pytest test_post_model.py
+(env)FLASK-REST-API$ pytest test_user_model.py
+(env)FLASK-REST-API$ pytest test_post.py
+(env)FLASK-REST-API$ pytest test_login.py
+(env)FLASK-REST-API$ pytest test_author.py
+(env)FLASK-REST-API$ pytest test_address.py
+(env)FLASK-REST-API$ pytest test_users.py
+```
