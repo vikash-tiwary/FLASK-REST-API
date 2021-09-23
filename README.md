@@ -17,10 +17,10 @@ and make sure that you are using python 3.8
 ```bash
 $ cd FLASK-REST-API
 $ virtualenv env
-(env)FLASK-REST-API$ source env/bin/actiavte
-```
-(env) $ pip install -r requirements.txt
+(env)$ source env/bin/actiavte
+(env)FLASK-REST-API$ pip install -r requirements.txt
 
+```
 ### Running
 
 When all dependencies has been installed, You can run the flask application 
