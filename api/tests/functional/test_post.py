@@ -26,7 +26,7 @@ def test_post_details():
     """
     Test function to get post of one id from  post
     """
-    response = requests.get("http://127.0.0.1:5000/post/post_details/1")
+    response = requests.get("http://127.0.0.1:5000/post/get/1")
     assert 401==response.status_code
 
 def test_post_update():
@@ -38,7 +38,7 @@ def test_post_update():
         "description":"description2"
         
     }
-    response=requests.put("http://127.0.0.1:5000/post/post_update/1",json=json.dumps(data))
+    response=requests.put("http://127.0.0.1:5000/post/update/1",json=json.dumps(data))
 
     assert 401==response.status_code
 

@@ -8,7 +8,6 @@ class Post(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(100))
     description = db.Column(db.String(200))
-    #author = db.relationship('Author',backref='post')
 
     def __init__(self,title,description):
         self.title=title
@@ -23,7 +22,7 @@ class Author(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     name = db.Column(db.String(100))
-    #address = db.relationship('Address',backref='author')
+    
     def __init__(self,post_id,name):
         self.post_id=post_id
         self.name=name
